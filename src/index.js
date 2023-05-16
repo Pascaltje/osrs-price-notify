@@ -69,7 +69,8 @@ async function searchPriceDrop(averagePrices, latestPrices) {
                 icon: icon, avg: avg.toFixed(2),
                 currentPrice: currentPrice,
                 percentage: percentage.toFixed(2),
-                count: count
+                count: count,
+                buyLimit: buyLimit
             }
 
             // notify!

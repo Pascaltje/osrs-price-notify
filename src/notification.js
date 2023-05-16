@@ -24,9 +24,10 @@ async function sendDiscordMessage(data) {
         .setTimestamp(Date.now())
         .addFields(
             {name: 'Average', value: data['avg'] + '', inline: true},
-            {name: 'currentPrice', value: data['currentPrice'] + '', inline: true},
-            {name: 'percentage', value: data['percentage'] + '%', inline: true},
-            {name: 'count', value: data['count'] + '', inline: false},
+            {name: 'CurrentPrice', value: data['currentPrice'] + '', inline: true},
+            {name: 'Percentage', value: data['percentage'] + '%', inline: true},
+            {name: 'Count', value: data['count'] + '', inline: true},
+            {name: 'Buy Limit', value: data['buyLimit'] + '', inline: true},
         )
 
     webhookClient.send({
