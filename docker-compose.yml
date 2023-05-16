@@ -1,0 +1,37 @@
+version: "2.1"
+services:
+  osrs-price-notify:
+    image: pascaltje/osrs-price-notify:latest
+    environment:
+      - TZ=Europe/Amsterdam
+      - DB_DIALECT=mariadb
+      - DB_HOST=mariadb_osrs
+      - DB_DATABASE=osrs
+      - DB_USER=osrs
+      - DB_PASSWORD=SomeGoodPassword!
+      - PERCENTAGE=40
+      - MINIMUM_COUNT=10
+      - CHECK_EVERY_MIN=5
+      - NOTIFY_TIME_OUT=6
+      - TELEGRAM_API_KEY=6029818692:AAG0ao6vNRW--BNoKgiNlaYKR3zLja9m18k
+      - TELEGRAM_P2P_CHAT=-934488881
+      - TELEGRAM_F2P_CHAT=-934488881
+    restart: unless-stopped
+    depends_on:
+      - mariadb_osrs
+  mariadb_osrs:
+    image: lscr.io/linuxserver/mariadb:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+      - MYSQL_ROOT_PASSWORD=ROOT_ACCESS_PASSWORD
+      - MYSQL_DATABASE=osrs #optional
+      - MYSQL_USER=osrs #optional
+      - MYSQL_PASSWORD=SomeGoodPassword! #optional
+    volumes:
+      - mariadb_osrs_data:/config
+    restart: unless-stopped
+
+volumes:
+   mariadb_osrs_data:

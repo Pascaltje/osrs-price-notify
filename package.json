@@ -1,0 +1,19 @@
+{
+  "name": "osrs-price-notify",
+  "version": "1.0.0",
+  "description": "Check the realtime price every 5 minutes to find price drops to make more profit flipping!",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "publish": "docker buildx build --no-cache --platform linux/amd64,linux/arm64,linux/arm/v7 -t pascaltje/osrs-price-notify:latest --push ."
+  },
+  "author": "Pascal van Hoof",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mariadb": "^3.1.1",
+    "node-telegram-bot-api": "^0.61.0",
+    "runelite": "^2.0.5",
+    "sequelize": "^6.30.0"
+  }
+}
