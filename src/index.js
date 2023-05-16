@@ -14,6 +14,7 @@ lastMessageIds = {}
 notifyTimeOut = (process.env.NOTIFY_TIME_OUT * 60 * 60) * 1000
 
 async function main() {
+
     await db.sync()
     await setupMap()
     await db.initDB()
@@ -62,8 +63,18 @@ async function searchPriceDrop(averagePrices, latestPrices) {
             url = "https://platinumtokens.com/item/" + itemsMap[itemId].name.replaceAll(" ", "-").toLowerCase()
             msg = `<a href="${url}">${itemsMap[itemId].name} ${icon}</a>\n<B>AVG:</B> ${avg.toFixed(2)}\n<B>Price:</B> ${currentPrice}\n<B>Percentage:</B> ${percentage.toFixed(2)}%\n<B>Count: </B>${count}`
 
+            data = {
+                url: url,
+                name: itemsMap[itemId].name,
+                icon: icon, avg: avg.toFixed(2),
+                currentPrice: currentPrice,
+                percentage: percentage.toFixed(2),
+                count: count
+            }
+
             // notify!
             if (!checkItemTimeout(itemId)) {
+                notifications.sendDiscordMessage(data);
                 console.log(`Item is members: ${itemsMap[itemId].members}`)
                 if (itemsMap[itemId].members) {
                     notifications.sendMessage(process.env.TELEGRAM_P2P_CHAT, msg)
