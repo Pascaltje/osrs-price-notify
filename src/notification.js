@@ -3,7 +3,7 @@ const { EmbedBuilder, WebhookClient } = require('discord.js');
 
 
 const bot = new TelegramBot(process.env.TELEGRAM_API_KEY, { polling: false });
-const webhookClient = new WebhookClient({ id: process.env.DISCORD_ID, token: process.env.DISCORD_TOKEN });
+const webhookClient = new WebhookClient({ id: process.env.DISCORD_ID, token: process.env.DISCORD_TOKEN, }, {allowedMentions: {parse: ['roles']}});
 
 async function sendMessage(chatId, message) {
     if (chatId) {
@@ -18,6 +18,7 @@ async function sendMessage(chatId, message) {
 async function sendDiscordMessage(data) {
     const embed = new EmbedBuilder()
         .setTitle(data['name'] + ' ' + data['icon'])
+        .setDescription(`<@&${process.env.DISCORD_ROLE}>`)
         .setThumbnail("https://oldschool.runescape.wiki/images/a/a2/" + data['name'].replaceAll(" ", "_") + ".png")
         .setColor(0x00FFFF)
         .setURL(data['url'])
@@ -34,6 +35,7 @@ async function sendDiscordMessage(data) {
         username: 'OSRS Price Drop!',
         avatarURL: 'https://i.imgur.com/AfFp7pu.png',
         embeds: [embed],
+        allowedMentions: {roles: [process.env.DISCORD_ROLE]}
     });
 }
 

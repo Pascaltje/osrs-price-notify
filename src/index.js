@@ -22,6 +22,26 @@ async function main() {
     // This function will be on loop every 5 minutes i guess
     setInterval(doRun, (60 * 1000) * process.env.CHECK_EVERY_MIN)
     await doRun()
+
+    // testNotification()
+
+}
+
+function testNotification(){
+    data = {
+        url: "https://platinumtokens.com/item/falador-teleport-tablet",
+        name: "Falador teleport (tablet)",
+        icon: p2pIcon, 
+        avg: 824.24,
+        currentPrice: 301,
+        percentage: 39.38,
+        count: 301,
+        buyLimit: 10000
+    }
+    msg = `<a href="${data.url}">${data.name} ${data.icon}</a>\n<B>AVG:</B> ${data.avg.toFixed(2)}\n<B>Price:</B> ${data.currentPrice}\n<B>Percentage:</B> ${data.percentage.toFixed(2)}%\n<B>Count: </B>${data.count}`
+    notifications.sendDiscordMessage(data);
+    notifications.sendMessage(process.env.TELEGRAM_P2P_CHAT, msg)
+    notifications.sendMessage(process.env.TELEGRAM_F2P_CHAT, msg)
 }
 
 async function setupMap() {
@@ -60,7 +80,7 @@ async function searchPriceDrop(averagePrices, latestPrices) {
 
         if (avg > currentPrice && percentage > process.env.PERCENTAGE && count > process.env.MINIMUM_COUNT && margin >= process.env.MARGIN && buyLimit >= process.env.BUY_LIMIT) {
             icon = getIcon(itemId)
-            url = "https://platinumtokens.com/item/" + itemsMap[itemId].name.replaceAll(" ", "-").toLowerCase()
+            url = "https://platinumtokens.com/item/" + itemsMap[itemId].name.replaceAll(" ", "-").replaceAll("(","").replaceAll(")","").toLowerCase()
             msg = `<a href="${url}">${itemsMap[itemId].name} ${icon}</a>\n<B>AVG:</B> ${avg.toFixed(2)}\n<B>Price:</B> ${currentPrice}\n<B>Percentage:</B> ${percentage.toFixed(2)}%\n<B>Count: </B>${count}`
 
             data = {
